@@ -1247,11 +1247,12 @@ def convex_hull(experiment: int):
     print('Starting convex hull ...')
     global settings
     settings = load_variables()
-    coppelia = CoppeliaInterface(settings)
 
-    positions, target_hull, centroid_points, radius = initializations(coppelia)
-    coppelia.sim.stopSimulation()
-    del coppelia
+    with open(f"./build.obj", "rb") as file:
+        positions = pickle.load(file)
+        target_hull = pickle.load(file)
+        centroid_points = pickle.load(file)
+        radius = pickle.load(file)
 
     targets_points_of_view, points_of_view_contribution, conversion_table = draw_cylinders_hemispheres(
         centroid_points,
